@@ -4,10 +4,11 @@ const webpack = require("webpack");
 const merge = require("webpack-merge");
 const path = require("path");
 const baseWebpackConfig = require("./webpack.base.conf");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
 const portfinder = require("portfinder");
+const basePlugins = require("./webpackBasePlugins");
 
 const { HOST, PORT, API_BASE_PATH } = process.env;
 
@@ -22,6 +23,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   devtool: "cheap-module-eval-source-map",
   devServer: {
     clientLogLevel: "warning",
+    compress: true,
+    contentBase: false, // since we use CopyWebpackPlugin.
     historyApiFallback: {
       rewrites: [
         {
@@ -30,27 +33,25 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         },
       ],
     },
-    hot: true,
-    contentBase: false, // since we use CopyWebpackPlugin.
-    compress: true,
     host: HOST || "0.0.0.0",
-    port: PORT || 8080,
+    hot: true,
     open: false,
     overlay: { warnings: false, errors: true },
+    port: PORT || 8080,
     publicPath: "/",
     proxy: {},
     quiet: true, // necessary for FriendlyErrorsPlugin
     watchOptions: {
-      poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
+      poll: false,
     },
   },
   plugins: [
+    ...basePlugins,
     new webpack.DefinePlugin({
       API_BASE_PATH: JSON.stringify(API_BASE_PATH),
       "process.env.NODE_ENV": '"development"',
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
     new webpack.NoEmitOnErrorsPlugin(),
     // https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
@@ -59,13 +60,17 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       inject: true,
     }),
     // copy custom static assets
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, "../static"),
-        to: "static",
-        ignore: [".*"],
-      },
-    ]),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, "../static"),
+          to: "static",
+          globOptions: {
+            ignore: [".*"],
+          },
+        },
+      ],
+    }),
   ],
 });
 
@@ -75,12 +80,8 @@ module.exports = new Promise((resolve, reject) => {
     if (err) {
       reject(err);
     } else {
-      // publish the new Port, necessary for e2e tests
       process.env.PORT = port;
-      // add port to devServer config
       devWebpackConfig.devServer.port = port;
-
-      // Add FriendlyErrorsPlugin
       devWebpackConfig.plugins.push(
         new FriendlyErrorsPlugin({
           compilationSuccessInfo: {

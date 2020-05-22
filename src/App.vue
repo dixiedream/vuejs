@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <router-view/>
-      <Footer />
+    <router-view />
+    <Footer />
   </div>
 
 </template>
@@ -18,31 +18,29 @@ export default {
 
 <style>
 #app {
-
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-display: flex;
-flex:1;
-flex-direction: column;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
 }
-.container{
+.container {
   max-width: 920px;
 }
-@media (max-width: 900px){
-.main-container{
-  margin:0;
-  padding:0;
-}
+@media (max-width: 900px) {
+  .main-container {
+    margin: 0;
+    padding: 0;
+  }
 }
 
-.inner-container{
+.inner-container {
   max-width: 730px !important;
   margin: auto;
 }
-.body-container{
+.body-container {
   max-width: 540px !important;
   margin: auto;
 }
-
 </style>
