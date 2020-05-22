@@ -11,11 +11,11 @@ FROM prepare-stage as dev-stage
 ENV NODE_ENV=development
 ENV PORT 8080
 EXPOSE 8080
-CMD [ "webpack-dev-server", "--color", "--progress", "--config build/webpack.dev.conf.js" ]
+CMD [ "npm", "run", "dev" ]
 
 FROM prepare-stage as test-stage
 ENV NODE_ENV=testing
-RUN npm i && \
+RUN npm ci && \
   npm cache clean --force
 # Unit tests
 RUN jest --config test/unit/jest.conf.js --coverage

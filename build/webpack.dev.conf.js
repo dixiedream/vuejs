@@ -5,7 +5,7 @@ const merge = require("webpack-merge");
 const path = require("path");
 const baseWebpackConfig = require("./webpack.base.conf");
 const CopyPlugin = require("copy-webpack-plugin");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const HtmlPlugin = require("html-webpack-plugin");
 const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
 const portfinder = require("portfinder");
 const basePlugins = require("./webpackBasePlugins");
@@ -19,12 +19,11 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       usePostCSS: true,
     }),
   },
-  // cheap-module-eval-source-map is faster for development
   devtool: "cheap-module-eval-source-map",
   devServer: {
     clientLogLevel: "warning",
     compress: true,
-    contentBase: false, // since we use CopyWebpackPlugin.
+    contentBase: false,
     historyApiFallback: {
       rewrites: [
         {
@@ -53,13 +52,11 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    // https://github.com/ampedandwired/html-webpack-plugin
-    new HtmlWebpackPlugin({
+    new HtmlPlugin({
       filename: "index.html",
       template: "index.html",
       inject: true,
     }),
-    // copy custom static assets
     new CopyPlugin({
       patterns: [
         {
