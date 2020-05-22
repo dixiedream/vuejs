@@ -1,0 +1,13 @@
+version: "2.4"
+
+services:
+  serverTest:
+    build:
+      context: ./
+      target: test-stage
+    environment:
+      - NODE_ENV=testing
+    volumes:
+      - ./app:/app
+    command: npm run test
+

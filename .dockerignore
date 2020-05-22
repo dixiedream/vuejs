@@ -1,0 +1,13 @@
+.vscode
+coverage
+node_modules
+*.env
+npm-debug.log
+docker-compose*
+.dockerignore
+Jenkinsfile
+.git
+.gitignore
+README.md
+LICENSE
+TODO.md
