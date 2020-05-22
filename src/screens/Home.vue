@@ -1,19 +1,16 @@
 <template>
   <div>
     <div class="container main-container">
-      <div class="inner-container">
-      </div>
+      <div class="inner-container"></div>
     </div>
   </div>
 </template>
 
 <script>
-import Footer from '../components/Footer'
 
 export default {
-  name: 'VueJS Boilerplate',
+  name: 'VueJSBoilerplate',
   components: {
-    Footer
   },
   data () {
     return {}
