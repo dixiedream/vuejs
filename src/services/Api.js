@@ -10,7 +10,7 @@ export default {
   user: {
     async login(email, password) {
       try {
-        const response = await axios.post(baseUrl + "auth", {
+        const response = await axios.post(`${baseUrl}/auth`, {
           email,
           password,
         });
@@ -21,7 +21,7 @@ export default {
     },
     async register(user) {
       try {
-        const response = await axios.post(baseUrl + "users", user);
+        const response = await axios.post(`${baseUrl}/users`, user);
         return response.data;
       } catch (error) {
         throw error;
@@ -29,7 +29,7 @@ export default {
     },
     async forgotPassword(telephone) {
       try {
-        const response = await axios.post(baseUrl + "auth/forgotPassword", {
+        const response = await axios.post(`${baseUrl}/auth/forgotPassword`, {
           email,
         });
         return response.data;

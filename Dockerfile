@@ -2,7 +2,7 @@
 FROM node:12-alpine as prepare-stage
 ENV HOST "0.0.0.0"
 ENV PORT 80
-ENV API_BASE_PATH "/api/"
+ENV API_BASE_PATH "/api"
 WORKDIR /app
 COPY package*.json ./
 
@@ -11,7 +11,7 @@ FROM prepare-stage as dev-stage
 ENV NODE_ENV=development
 ENV PORT 8080
 EXPOSE 8080
-CMD [ "webpack-dev-server", "--inline", "--progress", "--config build/webpack.dev.conf.js" ]
+CMD [ "webpack-dev-server", "--color", "--progress", "--config build/webpack.dev.conf.js" ]
 
 FROM prepare-stage as test-stage
 ENV NODE_ENV=testing
