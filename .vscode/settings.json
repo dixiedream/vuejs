@@ -1,18 +1,18 @@
 {
+  "eslint.validate": ["javascript", "javascriptreact", "vue"],
+  "eslint.autoFixOnSave": true,
   "editor.formatOnSave": true,
-  "eslint.quiet": false,
   "editor.tabSize": 2,
-  "eslint.validate": ["vue", "html", "javascript"],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "vetur.format.defaultFormatter.js": "vscode-typescript",
-  "vetur.format.defaultFormatter.html": "js-beautify-html",
-  "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
+  // "vetur.format.defaultFormatter.js": "vscode-typescript",
+  // "vetur.format.defaultFormatter.html": "js-beautify-html",
+  // "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
   "vetur.format.defaultFormatterOptions": {
     "prettier": {
-      // Prettier option here
       "semi": false
     }
-  }
+  },
+  "vetur.validation.template": true
 }
