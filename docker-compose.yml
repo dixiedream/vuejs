@@ -6,13 +6,12 @@ services:
       context: ./
       target: dev-stage
     environment:
-      - API_BASE_PATH=/api/
+      - API_BASE_PATH=/api
     volumes:
       - .:/app
     ports:
       - 8080:8080
     command: npm run dev
-
-  # By default 
+  # By default
   # backend:
   #   image: yourExpressJSApiImage

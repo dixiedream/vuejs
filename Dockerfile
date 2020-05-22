@@ -2,7 +2,7 @@
 FROM node:12-alpine as prepare-stage
 ENV HOST "0.0.0.0"
 ENV PORT 80
-ENV API_BASE_PATH "/api/"
+ENV API_BASE_PATH "/api"
 WORKDIR /app
 COPY package*.json ./
 
