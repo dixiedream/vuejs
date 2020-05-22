@@ -1,39 +1,42 @@
-# prepare state
-FROM node:12-alpine as prepare-stage
-ENV HOST "0.0.0.0"
-ENV PORT 80
-ENV API_BASE_PATH "/api"
+FROM node:12.2.0-alpine as base
 WORKDIR /app
+ENV PATH /app/node_modules/.bin:$PATH
+
 COPY package*.json ./
 
-# dev stage
-FROM prepare-stage as dev-stage
-ENV NODE_ENV=development
-ENV PORT 8080
-EXPOSE 8080
-CMD [ "npm", "run", "dev" ]
-
-FROM prepare-stage as test-stage
-ENV NODE_ENV=testing
-RUN npm ci && \
-  npm cache clean --force
-# Unit tests
-RUN jest --config test/unit/jest.conf.js --coverage
-# Run with compose
-CMD [ "node", "test/e2e/runner.js" ]
-
-# build stage
-FROM prepare-stage as build-stage
-COPY . .
+FROM base as dev
 RUN npm config list
 RUN npm ci && \
-  npm cache clean --force && \
-  node build/build.js --report
+    npm cache clean --force
+#RUN npm install @vue/cli@3.7.0 -g 
+CMD ["npm", "run", "serve"]
 
-# production stage
-FROM nginx:1.18-alpine as production-stage
+FROM base as build
+COPY . .
+RUN npm ci && \
+    npm cache clean --force
+RUN npm run build
+
+FROM nginx:1.18-alpine as production
 ENV NODE_ENV=production
-COPY --from=build-stage /app/dist /usr/share/nginx/html
+COPY --from=build /app/dist /usr/share/nginx/html
 COPY nginx.default.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
+
+
+# build environment
+# FROM node:12.2.0-alpine as build
+# WORKDIR /app
+# ENV PATH /app/node_modules/.bin:$PATH
+# COPY package.json /app/package.json
+# RUN npm install --silent
+# RUN npm install @vue/cli@3.7.0 -g
+# COPY . /app
+# RUN npm run build
+
+# # production environment
+# FROM nginx:1.16.0-alpine
+# COPY --from=build /app/dist /usr/share/nginx/html
+# EXPOSE 80
+# CMD ["nginx", "-g", "daemon off;"]

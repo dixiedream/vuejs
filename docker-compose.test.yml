@@ -4,10 +4,9 @@ services:
   serverTest:
     build:
       context: ./
-      target: test-stage
+      target: test
     environment:
       - NODE_ENV=testing
     volumes:
       - ./app:/app
-    command: npm run test
-
+    command: npm run test:unit && npm run test:e2e

@@ -3,15 +3,11 @@ version: "2.4"
 services:
   server:
     build:
-      context: ./
-      target: dev-stage
-    environment:
-      - API_BASE_PATH=/api
+      context: .
+      target: dev
+    # environment:
+    #   - API_BASE_PATH=/api
     volumes:
       - .:/app
     ports:
       - 8080:8080
-    # command: npm run dev
-    # By default
-  # backend:
-  #   image: yourExpressJSApiImage
