@@ -7,8 +7,6 @@ module.exports = {
     browser: true,
   },
   extends: ["eslint:recommended", "plugin:vue/recommended"],
-  // plugins: ["vue"],
-  // add your custom rules here
   rules: {
     "vue/html-self-closing": "off",
     "generator-star-spacing": "off",
