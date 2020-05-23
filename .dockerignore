@@ -1,4 +1,9 @@
+.vscode
 node_modules
+.editorconfig
 .git
 .gitignore
+docker-compose*.yml
+Jenkinsfile
+LICENSE
 README.md

@@ -5,6 +5,8 @@ services:
     build:
       context: .
       target: dev
+    env_file:
+      - ./.env
     # environment:
     #   - API_BASE_PATH=/api
     volumes:

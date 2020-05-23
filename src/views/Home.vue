@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <HelloWorld msg="Welcome to {{title}} App" />
   </div>
 </template>
 
@@ -14,5 +14,10 @@ export default {
   components: {
     HelloWorld,
   },
+  data(){
+    return {
+      title: process.env.VUE_APP_TITLE
+    }
+  }
 };
 </script>
