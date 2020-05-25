@@ -1,4 +1,4 @@
-# boilerplate
+# VueJs boilerplate
 
 ## Project setup
 
@@ -15,7 +15,7 @@ docker-compose run server npm i
 ### Compiles and hot-reloads for development
 
 ```
-npm run serve
+docker-compose up
 ```
 
 ### Compiles and minifies for production

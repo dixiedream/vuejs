@@ -18,6 +18,10 @@ ENV VUE_APP_TITLE ${VUE_APP_TITLE}
 
 ARG VUE_APP_API_URL='/api'
 ENV VUE_APP_API_URL $VUE_APP_API_URL
+
+ARG VUE_APP_GTM="GTM-yourGTM"
+ENV VUE_APP_GTM ${VUE_APP_GTM}
+
 COPY . .
 #RUN npm run build
 RUN vue-cli-service build

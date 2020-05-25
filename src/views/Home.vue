@@ -1,13 +1,15 @@
 <template>
   <div class="home">
     <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to {{title}} App" />
+    <HelloWorld :msg="msg" />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue';
+
+const { VUE_APP_TITLE } = process.env;
 
 export default {
   name: 'Home',
@@ -16,7 +18,7 @@ export default {
   },
   data(){
     return {
-      title: process.env.VUE_APP_TITLE
+      msg: `Welcome to ${VUE_APP_TITLE} App`
     }
   }
 };
