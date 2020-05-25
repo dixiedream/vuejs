@@ -20,16 +20,16 @@ pipeline {
         slackSend (color: 'warning', message: "Job started ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
       }
     }
-    stage('Build') {
-      steps {
-        sh "docker build -t $BUILD_IMAGE_REPO_TAG-base --target production-stage ."
-      }
-      post{
-          success{
-              echo "====++++Base image built++++===="
-          }
-      }
-    }
+    // stage('Build') {
+    //   steps {
+    //     sh "docker build -t $BUILD_IMAGE_REPO_TAG-base --target production ."
+    //   }
+    //   post{
+    //       success{
+    //           echo "====++++Base image built++++===="
+    //       }
+    //   }
+    // }
 
     stage('Linting and Unit tests') {
       steps {

@@ -23,8 +23,12 @@ ARG VUE_APP_GTM="GTM-yourGTM"
 ENV VUE_APP_GTM ${VUE_APP_GTM}
 
 COPY . .
-#RUN npm run build
+RUN vue-cli-service test:unit
 RUN vue-cli-service build
+
+FROM build as test
+ENV NODE_ENV=testing
+CMD ["vue-cli-service", "test:e2e"]
 
 FROM nginx:1.18-alpine as production
 ENV NODE_ENV=production

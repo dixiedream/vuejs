@@ -5,7 +5,7 @@
 ### Copy environment variables to your local file and change accordingly
 
 ```
-cp .env .env.local
+cp default.env .env
 ```
 
 ```
@@ -21,7 +21,13 @@ docker-compose up
 ### Compiles and minifies for production
 
 ```
-npm run build
+docker build . -t vuejsboilerplate
+```
+
+If you'd like to test in localhost the build
+
+```
+docker run -d -p 8080:80 vuejsboilerplate
 ```
 
 ### Run your unit tests
@@ -34,12 +40,6 @@ npm run test:unit
 
 ```
 npm run test:e2e
-```
-
-### Lints and fixes files
-
-```
-npm run lint
 ```
 
 ### Customize configuration

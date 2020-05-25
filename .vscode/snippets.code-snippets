@@ -1,0 +1,25 @@
+{
+  "VueJs Component": {
+    "prefix": "component",
+    "body": [
+      "/**",
+      " * Date: ${CURRENT_DATE}/${CURRENT_MONTH}/${CURRENT_YEAR}",
+      " * Time: ${CURRENT_HOUR}:${CURRENT_MINUTE}",
+      " */",
+      "<template>",
+      "  <div>",
+      "  </div>",
+      "</template>",
+      "",
+      "<script>",
+      "  export default() {",
+      "    ${1:code}",
+      "  }",
+      "</script>",
+      "",
+      "<style lang=\"scss\" scoped>",
+      "</style>"
+    ],
+    "description": "VueJs Component"
+  }
+}

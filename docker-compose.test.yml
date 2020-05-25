@@ -1,12 +1,13 @@
 version: "2.4"
 
 services:
-  serverTest:
+  test:
     build:
       context: ./
-      target: test
+      target: dev
     environment:
       - NODE_ENV=testing
     volumes:
-      - ./app:/app
-    command: npm run test:unit && npm run test:e2e
+      - .:/app
+    command: "vue-cli-service test:unit"
+    #command: "vue-cli-service test:unit && vue-cli-service test:e2e"
