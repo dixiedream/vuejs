@@ -33,11 +33,13 @@
 
 <script>
 // const { VUE_APP_TITLE } = process.env;
+const { VUE_APP_GTM } = process.env;
+
 
 export default {
   data(){
     return {
-      GTM: `GTM-W8P83S5`
+      GTM: VUE_APP_GTM
     }
   }
 };
