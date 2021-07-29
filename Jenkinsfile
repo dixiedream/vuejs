@@ -7,76 +7,47 @@ pipeline {
     string(name: 'IMAGE_REPO_NAME', defaultValue: '', description: 'The base image name')
     string(name: 'LATEST_BUILD_TAG', defaultValue: 'latest', description: 'The tag for the latest version')
     booleanParam(name: 'PUSH_DOCKER_IMAGES', defaultValue: true, description: 'Set to false to disable image pushes')
+    string(name: 'VUE_APP_API_URL', defaultValue: '/api/v1', description: 'The api base path')
   }
   environment {
     REGISTRY_CREDS = credentials('')
     BRANCH_NAME = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
     COMMIT_TAG = sh(returnStdout: true, script: 'git rev-parse HEAD').trim().take(7)
     BUILD_IMAGE_REPO_TAG = "${params.IMAGE_REPO_NAME}:${env.BUILD_TAG}"
+    PKG_VERSION = "${readJSON(file: 'package.json').version}"
   }
   stages {
     stage ('Start') {
       steps {
-        slackSend (color: 'warning', message: "Job started ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+        slackSend (color: 'warning', message: "Job started ${env.JOB_NAME} $PKG_VERSION (<${env.BUILD_URL}|Open>)")
       }
     }
-    // stage('Build') {
+   
+
+    // stage('Audit and scans') {
+    //   environment {
+    //     MICROSCANNER_TOKEN = credentials('microscanner-token')
+    //   }
     //   steps {
-    //     sh "docker build -t $BUILD_IMAGE_REPO_TAG-base --target production ."
+    //     sh 'docker build --build-arg MICROSCANNER_TOKEN -t $BUILD_IMAGE_REPO_TAG-audit --target audit .'
     //   }
     //   post{
     //       success{
-    //           echo "====++++Base image built++++===="
+    //           echo "====++++Scans OK++++===="
     //       }
     //   }
     // }
 
-    stage('Linting and Unit tests') {
-      steps {
-        sh "docker build -t $BUILD_IMAGE_REPO_TAG-test --target test ."
-      }
-      post{
-          success{
-              echo "====++++Tests passed++++===="
-          }
-      }
-    }
-
-    stage('Integration tests') {
-      steps {
-        sh "docker run --rm -u node $BUILD_IMAGE_REPO_TAG-test"
-      }
-      post{
-          success{
-              echo "====++++Tests passed++++===="
-          }
-          failure{
-            echo "====++++Tests failed++++===="
-          }
-      }
-    }
-
-    stage('Audit and scans') {
-      environment {
-        MICROSCANNER_TOKEN = credentials('microscanner-token')
-      }
-      steps {
-        sh 'docker build --build-arg MICROSCANNER_TOKEN -t $BUILD_IMAGE_REPO_TAG-audit --target audit .'
-      }
-      post{
-          success{
-              echo "====++++Scans OK++++===="
-          }
-      }
-    }
-
     stage('Build production image') {
       steps {
-        sh "docker build -t $BUILD_IMAGE_REPO_TAG ."
-        sh "docker tag $BUILD_IMAGE_REPO_TAG ${params.IMAGE_REPO_NAME}:$COMMIT_TAG"
-        sh "docker tag $BUILD_IMAGE_REPO_TAG ${params.IMAGE_REPO_NAME}:${readJSON(file: 'package.json').version}"
-        sh "docker tag $BUILD_IMAGE_REPO_TAG ${params.IMAGE_REPO_NAME}:${params.LATEST_BUILD_TAG}"
-        sh "docker tag $BUILD_IMAGE_REPO_TAG ${params.IMAGE_REPO_NAME}:$BRANCH_NAME-latest"
+        sh '''docker build \
+          --build-arg VUE_APP_API_URL=$VUE_APP_API_URL \
+          -t $BUILD_IMAGE_REPO_TAG .
+          '''
+        sh "docker tag $BUILD_IMAGE_REPO_TAG ${IMAGE_REPO_NAME}:$COMMIT_TAG"
+        sh "docker tag $BUILD_IMAGE_REPO_TAG ${IMAGE_REPO_NAME}:$PKG_VERSION"
+        sh "docker tag $BUILD_IMAGE_REPO_TAG ${IMAGE_REPO_NAME}:${LATEST_BUILD_TAG}"
+        sh "docker tag $BUILD_IMAGE_REPO_TAG ${IMAGE_REPO_NAME}:$BRANCH_NAME-latest"
       }
       post{
           success{
@@ -97,10 +68,10 @@ pipeline {
       steps {
         sh "echo $REGISTRY_CREDS_PSW | docker login -u $REGISTRY_CREDS_USR --password-stdin $REGISTRY_NAME"
         sh "docker push $BUILD_IMAGE_REPO_TAG"
-        sh "docker push ${params.IMAGE_REPO_NAME}:$COMMIT_TAG"
-        sh "docker push ${params.IMAGE_REPO_NAME}:${readJSON(file: 'package.json').version}"
-        sh "docker push ${params.IMAGE_REPO_NAME}:${params.LATEST_BUILD_TAG}"
-        sh "docker push ${params.IMAGE_REPO_NAME}:$BRANCH_NAME-latest"
+        sh "docker push ${IMAGE_REPO_NAME}:$COMMIT_TAG"
+        sh "docker push ${IMAGE_REPO_NAME}:$PKG_VERSION"
+        sh "docker push ${IMAGE_REPO_NAME}:${LATEST_BUILD_TAG}"
+        sh "docker push ${IMAGE_REPO_NAME}:$BRANCH_NAME-latest"
       }
       post{
           always {
@@ -117,10 +88,10 @@ pipeline {
           echo "====++++Job done++++===="
       }
       success{
-        slackSend (color: 'good', message: "Job done ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+        slackSend (color: 'good', message: "Job done ${env.JOB_NAME} $PKG_VERSION (<${env.BUILD_URL}|Open>)")
       }
       failure{
-        slackSend (color: 'danger', message: "Job failed ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+        slackSend (color: 'danger', message: "Job failed ${env.JOB_NAME} $PKG_VERSION (<${env.BUILD_URL}|Open>)")
       }
   }
 }

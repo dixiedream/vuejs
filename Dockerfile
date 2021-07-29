@@ -1,4 +1,4 @@
-FROM node:12.2.0-alpine as base
+FROM node:lts-alpine as base
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 RUN npm install @vue/cli -g
@@ -30,7 +30,7 @@ FROM build as test
 ENV NODE_ENV=testing
 CMD ["vue-cli-service", "test:e2e"]
 
-FROM nginx:1.18-alpine as production
+FROM nginx:stable-alpine as production
 ENV NODE_ENV=production
 COPY --from=build /app/dist /usr/share/nginx/html
 COPY nginx.default.conf /etc/nginx/conf.d/default.conf

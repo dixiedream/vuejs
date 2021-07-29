@@ -1,16 +1,14 @@
 {
-    "eslint.validate": ["javascript", "javascriptreact", "vue"],
-    "eslint.autoFixOnSave": true,
-    "editor.formatOnSave": true,
-    "editor.tabSize": 2,
-    "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true
-    },
-    "vetur.format.defaultFormatterOptions": {
-      "prettier": {
-        "semi": false
-      }
-    },
-    "vetur.validation.template": true
-  }
-  
+  "eslint.validate": ["javascript", "javascriptreact", "vue"],
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "vetur.format.defaultFormatterOptions": {
+    "prettier": {
+      "semi": false
+    }
+  },
+  "vetur.validation.template": true
+}
