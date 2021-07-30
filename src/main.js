@@ -2,7 +2,9 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 
-Vue.config.productionTip = false;
+const { NODE_ENV } = process.env;
+
+Vue.config.productionTip = NODE_ENV === "development";
 
 new Vue({
   router,

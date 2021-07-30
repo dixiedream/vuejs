@@ -39,7 +39,7 @@ RUN vue-cli-service build
 
 FROM build as test
 ENV NODE_ENV=testing
-CMD ["vue-cli-service", "test:e2e"]
+CMD ["vue-cli-service", "lint"]
 
 FROM build AS audit
 USER root

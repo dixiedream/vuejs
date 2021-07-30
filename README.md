@@ -30,18 +30,6 @@ If you'd like to test in localhost the build
 docker run -d -p 8080:80 vuejsboilerplate
 ```
 
-### Run your unit tests
-
-```
-npm run test:unit
-```
-
-### Run your end-to-end tests
-
-```
-npm run test:e2e
-```
-
 ### Customize configuration
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
