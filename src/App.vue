@@ -11,7 +11,6 @@
 
 
 <script>
-// const { VUE_APP_TITLE } = process.env;
 const { VUE_APP_GTM } = process.env
 
 export default {
