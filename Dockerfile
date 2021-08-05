@@ -34,12 +34,11 @@ ARG VUE_APP_GTM="GTM-yourGTM"
 ENV VUE_APP_GTM ${VUE_APP_GTM}
 
 COPY . .
-RUN vue-cli-service test:unit
 RUN vue-cli-service build
 
 FROM build as test
 ENV NODE_ENV=testing
-CMD ["vue-cli-service", "lint"]
+RUN vue-cli-service lint
 
 FROM build AS audit
 USER root
