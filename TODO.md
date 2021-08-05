@@ -1,3 +1,1 @@
-# Remove package.json npm scripts if working with dockerfile
-build
-dev
+Migrate to VueJs 3
