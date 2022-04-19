@@ -9,7 +9,6 @@ RUN apk update && \
 
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
-#RUN npm install @vue/cli -g
 COPY package*.json ./
 RUN npm config list
 RUN npm ci && \
