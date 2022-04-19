@@ -4,10 +4,4 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "vetur.format.defaultFormatterOptions": {
-    "prettier": {
-      "semi": false
-    }
-  },
-  "vetur.validation.template": true
 }

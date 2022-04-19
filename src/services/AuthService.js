@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const { VUE_APP_API_PATH } = process.env;
+const { VITE_API_PATH } = import.meta.env;
 
-const endpoint = `${VUE_APP_API_PATH}/auth`;
+const endpoint = `${VITE_API_PATH}/auth`;
 
 export default {
   async login(email, password) {
