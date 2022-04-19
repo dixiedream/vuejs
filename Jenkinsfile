@@ -7,7 +7,7 @@ pipeline {
     string(name: 'IMAGE_REPO_NAME', defaultValue: '', description: 'The base image name')
     string(name: 'LATEST_BUILD_TAG', defaultValue: 'latest', description: 'The tag for the latest version')
     booleanParam(name: 'PUSH_DOCKER_IMAGES', defaultValue: true, description: 'Set to false to disable image pushes')
-    string(name: 'VUE_APP_API_URL', defaultValue: '/api/v1', description: 'The api base path')
+    string(name: 'VITE_API_URL', defaultValue: '/api/v1', description: 'The api base path')
   }
   environment {
     REGISTRY_CREDS = credentials('')
@@ -41,7 +41,7 @@ pipeline {
     stage('Build production image') {
       steps {
         sh '''docker build \
-          --build-arg VUE_APP_API_URL=$VUE_APP_API_URL \
+          --build-arg VITE_API_URL=$VITE_API_URL \
           -t $BUILD_IMAGE_REPO_TAG .
           '''
         sh "docker tag $BUILD_IMAGE_REPO_TAG ${IMAGE_REPO_NAME}:$COMMIT_TAG"

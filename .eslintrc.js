@@ -1,17 +1,14 @@
 module.exports = {
   root: true,
   env: {
-    node: true,
+    es2021: true
   },
-  extends: ["plugin:vue/recommended", "eslint:recommended"],
-  parserOptions: {
-    parser: "babel-eslint",
-  },
+  extends: ["plugin:vue/vue3-recommended", "eslint:recommended", "prettier"],
   rules: {
     "vue/html-self-closing": "off",
     "generator-star-spacing": "off",
-    "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
-    "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
+    "no-console": import.meta.env.PROD ? "warn" : "off",
+    "no-debugger": import.meta.env.PROD ? "warn" : "off",
   },
   overrides: [
     {

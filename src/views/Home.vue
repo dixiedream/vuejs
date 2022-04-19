@@ -12,7 +12,7 @@
 // @ is an alias to /src
 import HelloWorld from "@/components/HelloWorld.vue"
 
-const { VUE_APP_TITLE } = process.env
+const { VITE_TITLE } = import.meta.env
 
 export default {
   name: "Home",
@@ -21,7 +21,7 @@ export default {
   },
   data() {
     return {
-      msg: `Welcome to ${VUE_APP_TITLE} App`,
+      msg: `Welcome to ${VITE_TITLE} App`,
     }
   },
 }

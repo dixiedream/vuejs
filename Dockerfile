@@ -9,7 +9,6 @@ RUN apk update && \
 
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
-RUN npm install @vue/cli -g
 COPY package*.json ./
 RUN npm config list
 RUN npm ci && \
@@ -17,28 +16,25 @@ RUN npm ci && \
 
 FROM base as dev
 EXPOSE 8080
-CMD ["vue-cli-service", "serve" ]
+CMD ["vite", "--host" ]
 
 FROM base as build
 
 ARG PUBLIC_PATH="/"
 ENV PUBLIC_PATH ${PUBLIC_PATH}
 
-ARG VUE_APP_TITLE="VueJS Boilerplate"
-ENV VUE_APP_TITLE ${VUE_APP_TITLE}
+ARG VITE_TITLE="VueJS Boilerplate"
+ENV VITE_TITLE ${VITE_TITLE}
 
-ARG VUE_APP_API_URL='/api'
-ENV VUE_APP_API_URL $VUE_APP_API_URL
-
-ARG VUE_APP_GTM="GTM-yourGTM"
-ENV VUE_APP_GTM ${VUE_APP_GTM}
+ARG VITE_API_URL='/api'
+ENV VITE_API_URL $VITE_API_URL
 
 COPY . .
-RUN vue-cli-service build
+RUN vite build
 
 FROM build as test
 ENV NODE_ENV=testing
-RUN vue-cli-service lint
+RUN eslint --ext .js,.vue --ignore-path .gitignore --fix src && prettier . --write
 
 FROM build AS audit
 USER root
