@@ -38,4 +38,5 @@ See [Configuration Reference](https://vitejs.dev/config/).
 
 - ~~Migrate to VueJs 3~~
 - ~~Migrate to Vite~~
+- Remove Axios
 
