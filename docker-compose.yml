@@ -5,8 +5,9 @@ services:
     build:
       context: .
       target: dev
-    env_file:
-      - ./.env
+    environment:
+      - VITE_TITLE
+      - VITE_API_URL
     volumes:
       - .:/app
     ports:

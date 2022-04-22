@@ -22,21 +22,6 @@ pipeline {
         slackSend (color: 'warning', message: "Job started ${env.JOB_NAME} $PKG_VERSION (<${env.BUILD_URL}|Open>)")
       }
     }
-   
-
-    // stage('Audit and scans') {
-    //   environment {
-    //     MICROSCANNER_TOKEN = credentials('microscanner-token')
-    //   }
-    //   steps {
-    //     sh 'docker build --build-arg MICROSCANNER_TOKEN -t $BUILD_IMAGE_REPO_TAG-audit --target audit .'
-    //   }
-    //   post{
-    //       success{
-    //           echo "====++++Scans OK++++===="
-    //       }
-    //   }
-    // }
 
     stage('Build production image') {
       steps {
