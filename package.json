@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "axios": "^0.26.1",
     "vue": "^3.2.33",
     "vue-router": "^4.0.14"
   },
