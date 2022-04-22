@@ -9,13 +9,13 @@ cp default.env .env
 ```
 
 ```
-docker-compose run server npm i
+docker compose run server npm i
 ```
 
 ### Compiles and hot-reloads for development
 
 ```
-docker-compose up
+docker compose up
 ```
 
 ### Compiles and minifies for production
@@ -32,4 +32,10 @@ docker run -d -p 8080:80 vuejsboilerplate
 
 ### Customize configuration
 
-See [Configuration Reference](https://cli.vuejs.org/config/).
+See [Configuration Reference](https://vitejs.dev/config/).
+
+### To-Do
+
+- ~~Migrate to VueJs 3~~
+- ~~Migrate to Vite~~
+
