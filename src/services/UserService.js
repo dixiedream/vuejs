@@ -1,12 +1,10 @@
-import axios from "axios";
+import Api from "./config";
 
-const { VITE_API_PATH } = import.meta.env;
-
-const endpoint = `${VITE_API_PATH}/users`;
+const endpoint = `users`;
 
 export default {
   async createUser(user) {
-    const response = await axios.post(endpoint, user);
+    const response = await Api.post(endpoint, user);
     return response.data;
   },
 };
