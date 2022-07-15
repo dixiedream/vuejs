@@ -31,7 +31,7 @@
         "vue-tsc": "^0.34.7"
     },
     "simple-git-hooks": {
-        "pre-commit": "docker-compose run --rm frontend npm run lint:fix",
+        "pre-commit": "docker run --rm -v \"$PWD:/app\" -w /app node:lts-alpine npm run lint:fix",
         "preserveUnused": false
     },
     "msw": {
