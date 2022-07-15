@@ -1,14 +1,14 @@
 version: "2.4"
 
 services:
-  server:
-    build:
-      context: .
-      target: dev
-    environment:
-      - VITE_TITLE
-      - VITE_API_URL
-    volumes:
-      - .:/app
-    ports:
-      - 8080:8080
+    frontend:
+        build:
+            context: .
+            target: dev
+        environment:
+            - VITE_TITLE
+            - VITE_API_URL
+        volumes:
+            - .:/app
+        ports:
+            - 8080:8080

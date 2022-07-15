@@ -23,18 +23,15 @@ FROM base as build
 ARG PUBLIC_PATH="/"
 ENV PUBLIC_PATH ${PUBLIC_PATH}
 
-ARG VITE_TITLE="VueJS Boilerplate"
+ARG VITE_TITLE="VueJs boilerplate"
 ENV VITE_TITLE ${VITE_TITLE}
 
 ARG VITE_API_URL='/api'
 ENV VITE_API_URL $VITE_API_URL
 
 COPY . .
-RUN vite build
-
-FROM build as test
-ENV NODE_ENV=testing
-RUN eslint --ext .js,.vue --ignore-path .gitignore --fix src && prettier . --write
+RUN eslint . --fix && prettier . --write
+RUN vue-tsc --noEmit && vite build
 
 FROM build AS audit
 USER root
