@@ -13,7 +13,7 @@ docker compose run --rm frontend npm i
 docker compose run --rm frontend npx simple-git-hooks
 ```
 
-## Usage 
+## Usage
 
 ### Compiles and hot-reloads for development
 
