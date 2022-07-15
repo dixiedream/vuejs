@@ -9,7 +9,7 @@ cp default.env .env
 ```
 
 ```
-docker compose run server npm i
+docker compose run frontend npm i
 ```
 
 ### Compiles and hot-reloads for development
@@ -36,6 +36,7 @@ See [Configuration Reference](https://vitejs.dev/config/).
 
 ### To-Do
 
+- ~~Migrate to Typescript~~
 - ~~Migrate to VueJs 3~~
 - ~~Migrate to Vite~~
 - ~~Remove Axios~~
