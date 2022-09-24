@@ -30,7 +30,7 @@ ARG VITE_API_URL='/api'
 ENV VITE_API_URL $VITE_API_URL
 
 COPY . .
-RUN eslint . --fix && prettier . --write
+RUN standard --fix
 RUN vue-tsc --noEmit && vite build
 
 FROM build AS audit
